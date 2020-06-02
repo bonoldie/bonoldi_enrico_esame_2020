@@ -1,0 +1,39 @@
+[
+   {
+      "nome":"Marco",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   },{
+      "nome":"Alessandro",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   },{
+      "nome":"Giuseppe",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   },{
+      "nome":" Flavio",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   },{
+      "nome":" Luca",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   },{
+      "nome":"Giovanni",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1001",
+      "sesso_id":0
+   }
+]
