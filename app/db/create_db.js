@@ -30,5 +30,6 @@ if(!process.argv[2]){
    await createUtenti(connectionPool)
 
    console.log("-- OK :) --\n")
-   await connectionPool.end()
+
+   process.exit(0);
 })()

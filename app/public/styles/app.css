@@ -1,0 +1,11 @@
+.bg-pink {
+   background-color: pink;
+}
+
+.card {
+   border-radius: 1px;
+   border-color: #eeeeee;
+   -webkit-box-shadow: 2px 2px 2px 0px rgba(222, 222, 222, 0.62);
+   -moz-box-shadow: 2px 2px 2px 0px rgba(222, 222, 222, 0.62);
+   box-shadow: 2px 2px 2px 0px rgba(222, 222, 222, 0.63);
+}

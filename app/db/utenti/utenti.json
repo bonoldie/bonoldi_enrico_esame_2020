@@ -1,39 +1,103 @@
 [
    {
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Marco",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
-      "residenza_id":"1001",
-      "sesso_id":0
+      "residenza_id":"1020",
+      "sesso_id":0,
+      "interesse_sesso": 1
    },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Alessandro",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
       "residenza_id":"1001",
-      "sesso_id":0
+      "sesso_id":0,
+      "interesse_sesso": 1
    },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Giuseppe",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
-      "residenza_id":"1001",
-      "sesso_id":0
+      "residenza_id":"1002",
+      "sesso_id":0,
+      "interesse_sesso": 1
    },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Flavio",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
-      "residenza_id":"1001",
-      "sesso_id":0
+      "residenza_id":"1003",
+      "sesso_id":0,
+      "interesse_sesso": 1
    },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Luca",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
-      "residenza_id":"1001",
-      "sesso_id":0
+      "residenza_id":"1004",
+      "sesso_id":0,
+      "interesse_sesso": 1
    },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Giovanni",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
-      "residenza_id":"1001",
-      "sesso_id":0
+      "residenza_id":"1005",
+      "sesso_id":0,
+      "interesse_sesso": 1
+   },
+   {
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "nome":"Lucia",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1006",
+      "sesso_id":1,
+      "interesse_sesso": 0
+   },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "nome":"Anna",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1007",
+      "sesso_id":1,
+      "interesse_sesso": 0
+   },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "nome":"Sara",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1008",
+      "sesso_id":1,
+      "interesse_sesso": 0
+   },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "nome":" Maria",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"1009",
+      "sesso_id":1,
+      "interesse_sesso": 0
+   },{
+      "email":"nome@cognome.test",
+      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "nome":" Valentina",
+      "cognome":"Rossi",
+      "data_nascita":"1990/01/01",
+      "residenza_id":"10010",
+      "sesso_id":1,
+      "interesse_sesso": 0
    }
 ]

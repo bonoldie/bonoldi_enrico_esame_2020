@@ -34,7 +34,7 @@ module.exports = (async (pool) => {
       );
 
       await client.query(
-         "CREATE TABLE utente (id serial NOT NULL,nome varchar(40) NOT NULL,cognome varchar(40) NOT NULL,data_nascita date NOT NULL,sesso_id int4 NOT NULL,residenza_id int4 NOT NULL)",
+         "CREATE TABLE utente (id serial NOT NULL,email varchar(255) NOT NULL,password varchar(255)NOT NULL,nome varchar(40) NOT NULL,cognome varchar(40) NOT NULL,data_nascita date NOT NULL,sesso_id int4 NOT NULL,residenza_id int4 NOT NULL)",
          (err, res) => {
             if (err)
                console.log(err)
@@ -90,8 +90,8 @@ module.exports = (async (pool) => {
 
       try {
          JSON.parse(data).forEach(async (entry) => {
-            if (entry.nome && entry.cognome && entry.data_nascita && entry.residenza_id && entry.sesso_id)
-               await client.query(`INSERT INTO utente (nome,cognome,data_nascita,sesso_id,residenza_id) VALUES ($1, $2,$3, $4,$5) `, [entry.nome, entry.cognome, entry.data_nascita, entry.sesso_id, entry.residenza_id]);
+            if (entry.nome && entry.cognome && entry.data_nascita && entry.residenza_id && entry.sesso_id != undefined  && entry.email  && entry.password)
+               await client.query(`INSERT INTO utente (email,password,nome,cognome,data_nascita,sesso_id,residenza_id) VALUES ($1, $2,$3, $4,$5,$6,$7) `, [entry.email,entry.password,entry.nome, entry.cognome, entry.data_nascita, entry.sesso_id, entry.residenza_id]);
          })
 
          await client.query('COMMIT');
@@ -104,5 +104,4 @@ module.exports = (async (pool) => {
          reject(e)
       }
    }))
-
 })
