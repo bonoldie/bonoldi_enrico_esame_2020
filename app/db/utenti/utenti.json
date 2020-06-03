@@ -1,7 +1,8 @@
 [
    {
-      "email":"nome@cognome.test",
-      "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "telefono":"00000000",
+      "email":"admin@admin.com",
+      "password":"jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
       "nome":"Marco",
       "cognome":"Rossi",
       "data_nascita":"1990/01/01",
@@ -9,6 +10,7 @@
       "sesso_id":0,
       "interesse_sesso": 1
    },{
+      "telefono":"11111111",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Alessandro",
@@ -18,6 +20,7 @@
       "sesso_id":0,
       "interesse_sesso": 1
    },{
+      "telefono":"22222222",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Giuseppe",
@@ -27,6 +30,7 @@
       "sesso_id":0,
       "interesse_sesso": 1
    },{
+      "telefono":"33333333",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Flavio",
@@ -36,6 +40,7 @@
       "sesso_id":0,
       "interesse_sesso": 1
    },{
+      "telefono":"44444444",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Luca",
@@ -45,6 +50,7 @@
       "sesso_id":0,
       "interesse_sesso": 1
    },{
+      "telefono":"55555555",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Giovanni",
@@ -55,6 +61,7 @@
       "interesse_sesso": 1
    },
    {
+      "telefono":"66666666",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Lucia",
@@ -64,6 +71,7 @@
       "sesso_id":1,
       "interesse_sesso": 0
    },{
+      "telefono":"77777777",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Anna",
@@ -73,6 +81,7 @@
       "sesso_id":1,
       "interesse_sesso": 0
    },{
+      "telefono":"88888888",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":"Sara",
@@ -82,6 +91,7 @@
       "sesso_id":1,
       "interesse_sesso": 0
    },{
+      "telefono":"99999999",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Maria",
@@ -91,6 +101,7 @@
       "sesso_id":1,
       "interesse_sesso": 0
    },{
+      "telefono":"1101010101",
       "email":"nome@cognome.test",
       "password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "nome":" Valentina",

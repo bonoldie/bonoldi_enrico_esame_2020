@@ -1,5 +1,22 @@
 <header>
    <nav class="navbar navbar-light bg-light">
-      <a link="/" class="navbar-brand mb-0 h1">Amami <i class="fas fa-heart" style="color:pink"></i></a>
-    </nav>
+      <a href="/" class="navbar-brand mb-0 h1">
+         <% if (user) { %>
+         <%= user.nome %> <%= user.cognome %>
+         <% } else { %>
+         <span>Benvenuto</span>
+         <% } %>
+
+         <% if (user && user.sesso == "maschio") { %>
+            <i class="fas fa-heart" style="color:cyan"></i>
+            <% } else { %>
+               <i class="fas fa-heart" style="color:pink"></i>
+            <% } %>
+         </a>
+         
+      <% if (user) { %>
+      <a href="/login" class="navbar-brand mb-0 h1"> <button class="btn bg-light">logout 
+         <i class="fas fa-sign-out-alt"style="color:pink"></i></button></a>
+      <% } %>
+   </nav>
 </header>

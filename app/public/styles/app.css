@@ -9,3 +9,7 @@
    -moz-box-shadow: 2px 2px 2px 0px rgba(222, 222, 222, 0.62);
    box-shadow: 2px 2px 2px 0px rgba(222, 222, 222, 0.63);
 }
+
+#usermap {
+   height: 180px;
+}

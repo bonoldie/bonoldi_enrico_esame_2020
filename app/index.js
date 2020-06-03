@@ -1,47 +1,60 @@
 // Import modules
-const express = require("express")
+const express = require("express");
 const expressApp = express();
-const session = require("express-session");
-const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
+const { authenticate } = require('./libs/authenticate');
+const {getUser,findUsers} = require('./libs/user');
 
-// setup all the express stuff...
-expressApp.use(express.static('public'));
-expressApp.use(bodyParser.urlencoded({ extended: true })); 
-expressApp.use(session({
-   secret: 'myAppSecret',
-   resave: false,
-   saveUninitialized: true,
-   cookie: {
-      maxAge: 86400000
-   }
-}))
-expressApp.set('view engine', 'ejs');
-expressApp.use(require('./middlewares/auth'));
-
+require('./libs/setup')(expressApp)
 
 // Routes
 expressApp.get('/login', (req, res) => {
-   res.render('pages/login',{errors:[]})
+   delete req.session.isAuthenticated;
+   delete req.session.user;
+   expressApp.locals.user = false
+   res.render('pages/login', { errors: false })
 })
 
 expressApp.post('/login', [
    body('email').isEmail(),
    body('password').isLength({ min: 1 })
-], (req, res) => {
-   const errors = validationResult(req);
+], async (req, res) => {
+   const inputValidator = validationResult(req);
    
-   if (!errors.isEmpty()) {
-      return res.status(401).render('/login',{errors});
+   if (!inputValidator.isEmpty()) {
+      //return res.status(401).render('pages/login', { errors: inputValidator.errors });
    }
 
-   res.render('pages/login')
+   const auth = await authenticate("admin@admin.com","admin")//(req.body.email, req.body.password)
+
+   if(auth)
+   {
+      req.session.isAuthenticated = true
+      req.session.user = await getUser(auth.id)
+      expressApp.locals.user = await getUser(auth.id)
+      res.redirect('/');
+   }else{
+      req.session.isAuthenticated = false
+      expressApp.locals.user = false
+      res.render('pages/login', { errors:  [{msg: "Invalid inputs!" ,param:"Email or Password"}] })
+   }
 })
 
-expressApp.get('/', (req, res) => {
+expressApp.get('/', async (req, res) => {
    res.render('pages/dashboard')
 })
 
+expressApp.get('/find/:distance', async (req, res) => {
+   const users = await findUsers(req.session.user.id,req.params.distance ? req.params.distance : 10000)
+   res.render('pages/find',{users:users,distance: (req.params.distance ? req.params.distance : 10000)})
+})
+
+expressApp.get('/user/:userID', async (req, res) => {
+   const user = await getUser(req.params.userID)
+   
+   console.log(user)
+   res.render('pages/user',{userData:user})
+})
 
 // Finishing up...
 expressApp.listen(8080);

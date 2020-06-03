@@ -50,20 +50,10 @@ module.exports = (async (pool) => {
       );
 
       await client.query(
-         "CREATE TABLE citta_posizione (istat_id varchar(10) NOT NULL)",
+         "CREATE TABLE citta_posizione (istat_id varchar(10) NOT NULL,posizione GEOGRAPHY(POINT,4326))",
          async (err, res) => {
             if (err)
                console.log(err)
-            else
-               await client.query(
-                  "SELECT addGeometryColumn('public','citta_posizione','posizione',4326,'POINT',2)",
-                  (err, res) => {
-                     if (err)
-                        console.log(err)
-                     else
-                        console.log("-- created table >> citta_posizione <<  \n");
-                  }
-               );
          }
       );
 
