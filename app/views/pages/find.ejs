@@ -3,7 +3,7 @@
 
 <head>
    <meta charset="UTF-8">
-   <title>AMAMI</title>
+   <title>AGENZIA CUPIDO</title>
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -27,6 +27,7 @@
       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
       crossorigin=""></script>
 
+   <link rel="stylesheet" href="/styles/app.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
 </head>
 
@@ -34,65 +35,35 @@
    <%- include('../partials/navbar'); %>
 
    <main role="main" class="container">
-      <% if (users) { %>
       <div class="card mt-3">
          <div class="card-body text-center">
             <div class="row">
                <div class="col-12">
                   <form>
                      <div class="form-group">
-                        <label for="distanceRange">Distanza : <b><span id="distance"><%= distance / 1000 %></span>
-                              KM</b></label>
+                        <label for="distanceRange">Distanza : <b><span id="distance"></span> KM</b></label>
                         <input type="range" class="form-control-range" id="distanceRange">
                      </div>
                   </form>
                </div>
-               <div class="col-12">
+               <div class="col-sm-12 col-md-8 col-lg-8">
                   <div id="usersmap" style="height:700px;"></div>
+               </div>
+               <div class="col-sm-12 col-md-4 col-lg-4">
+                  <ul class="list-group" id="usersList" style="overflow-y: scroll;height: 700px;">
+                  </ul>
                </div>
             </div>
 
          </div>
       </div>
 
-      <%  } %>
    </main>
 
    <%- include('../partials/footer'); %>
 
-   <% if (users) { %>
-
-   <script type="text/javascript">
-      (() => {
-
-         var usersmap = L.map('usersmap').setView([<%= user.posizione_coordinate.split(/[\s()]+/)[2] %> , <%= user.posizione_coordinate.split(/[\s()]+/)[1] %>], 10);
-
-         L.tileLayer('https://a.tile.openstreetmap.de/{z}/{x}/{y}.png', {
-            maxZoom: 14,
-            tileSize: 512,
-            zoomOffset: -1,
-         }).addTo(usersmap);
-
-         var circle = L.circle([<%= user.posizione_coordinate.split(/[\s()]+/)[2] %> ,<%= user.posizione_coordinate.split(/[\s()]+/)[1] %>], {
-            color: 'green',
-            fillColor: '#90EE90',
-            fillOpacity: 0.3,
-            radius: <%= distance %>
-      }).addTo(usersmap);
-      
-      <% users.forEach(findUser => { %>
-         <%- `L.marker([${findUser.posizione_coordinate.split(/[\s()]+/)[2]},${findUser.posizione_coordinate.split(/[\s()]+/)[1]}]).bindPopup('<a  href="/user/${findUser.id}">${findUser.nome} ${findUser.cognome} ( ${Math.round(findUser.distance_between) / 1000} km)</a>').addTo(usersmap);` %>
-      <% }) %>
-
-         document.getElementById("distanceRange").value = <%= distance %> / 1000
-
-      document.getElementById("distanceRange").oninput = ev => document.getElementById("distance").innerHTML = ev.target.value
-      document.getElementById("distanceRange").onchange = ev => window.location.href = ev.target.value * 1000
-      }) ()
-   </script>
-
-   <% } %>
-
+   <!-- Custom users map loading -->
+   <script type="text/javascript" src="/js/usersMap.js"></script>
 </body>
 
 </html>

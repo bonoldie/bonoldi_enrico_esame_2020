@@ -1,4 +1,5 @@
 // Import modules
+const fs = require("fs")
 const express = require("express");
 const expressApp = express();
 const { body, validationResult } = require('express-validator');
@@ -41,19 +42,37 @@ expressApp.post('/login', [
 })
 
 expressApp.get('/', async (req, res) => {
-   res.render('pages/dashboard')
+   res.render('pages/account')
 })
 
-expressApp.get('/find/:distance', async (req, res) => {
-   const users = await findUsers(req.session.user.id,req.params.distance ? req.params.distance : 10000)
-   res.render('pages/find',{users:users,distance: (req.params.distance ? req.params.distance : 10000)})
+expressApp.get('/find', async (req, res) => {
+   res.render('pages/find')
+})
+
+// Proxy route to handle no img users
+expressApp.get('/users/img/:userID',(req,res)=>{
+   if(fs.existsSync(`./public/images/users/${req.params.userID}.png`))
+      req.url = `/images/users/${req.params.userID}.png`;
+   else
+      req.url = `/images/users/default.png`
+   expressApp.handle(req,res)
 })
 
 expressApp.get('/user/:userID', async (req, res) => {
    const user = await getUser(req.params.userID)
-   
-   console.log(user)
    res.render('pages/user',{userData:user})
+})
+
+
+
+// API
+expressApp.get('/api/find/:distance', async (req, res) => {
+   const distance = req.params.distance ? req.params.distance : 10000;
+   const users = await findUsers(req.session.user.id,distance)
+   
+   res.contentType('application/json');
+   res.status = 200;
+   res.send(JSON.stringify({users,distance}))
 })
 
 // Finishing up...

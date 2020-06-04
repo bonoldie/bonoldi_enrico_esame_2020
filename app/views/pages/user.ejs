@@ -3,9 +3,9 @@
 
 <head>
    <meta charset="UTF-8">
-   <title>AMAMI</title>
+   <title>AGENZIA CUPIDO</title>
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
+
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -39,13 +39,14 @@
          <div class="card-body text-center">
             <h2><%= userData.nome %> <%= userData.cognome %>
                <% if (userData && userData.sesso == "maschio") { %>
-               <i class="fas fa-heart" style="color:cyan"></i>
+               <!-- <i class="fas fa-heart" style="color:cyan"></i> -->
                <% } else { %>
-               <i class="fas fa-heart" style="color:pink"></i>
+               <!-- <i class="fas fa-heart" style="color:pink"></i> -->
                <% } %>
             </h2>
             <hr>
             <div class="row m-2">
+               <div class="col-12"><img src="<%= `/users/img/${userData.id}`%>" width="100" height="auto"></div>
                <div class="col-lg-4 col-md-6 col-sm-12 text-center mt-3">
                   <b>Età</b> :
                   <%= parseInt((new Date() - new Date(userData.data_nascita)) / (60 * 60 * 24 * 365 * 1000 ))  %> anni
