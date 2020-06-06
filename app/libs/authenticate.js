@@ -8,8 +8,10 @@ const getHashPassword = password => {
 const authenticate = async (email, password) => {
    const client = await db()
 
-   return await client.query("SELECT * FROM utente,citta,citta_posizione WHERE email=$1 LIMIT 1", [email])
+   
+   return await client.query("SELECT * FROM utente WHERE email=$1 LIMIT 1", [email])
       .then(res => {
+         console.log(res)
          if(res.rowCount == 1 && res.rows[0].password === getHashPassword(password)){
             return res.rows[0]
          }

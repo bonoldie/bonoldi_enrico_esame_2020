@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+   <meta charset="UTF-8">
+   <title>AGENZIA CUPIDO</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin="" />
+
+   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+</head>
+
+<body>
+   <%- include('../partials/navbar'); %>
+
+   <main role="main" class="container">
+      <% if (user) { %>
+      <div class="card mt-3">
+         <div class="card-body text-center">
+            <h2><%= user.nome %> <%= user.cognome %></h2>
+            <hr>
+            <div class="row m-2">
+               <div class="col-12"><img src="<%= `/users/img/${user.id}`%>" width="100" height="auto" id="profilePic">
+               </div>
+               <form>
+                  <input type="file" id="imgUpload" style="display:none" />
+               </form>
+               <div class="col-lg-4 col-md-6 col-sm-12 text-center mt-3">
+                  <b>Età</b> :
+                  <%= parseInt((new Date() - new Date(user.data_nascita)) / (60 * 60 * 24 * 365 * 1000 ))  %> anni
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 text-center mt-3">
+                  <b>Email</b> : <%= user.email %>
+               </div>
+               <div class="col-lg-4 col-md-6 col-sm-12 text-center mt-3">
+                  <b>Numero di telefono</b> : <%= user.telefono %>
+               </div>
+
+               <div class="col-lg-4 col-md-6 col-sm-12 text-center mt-3">
+                  <b>Indirizzo</b> : <%= user.comune %>(<%= user.provincia %>), <%= user.regione %>
+               </div>
+            </div>
+            <hr>
+            <div id="usermap" style="height: 400px;"></div>
+         </div>
+      </div>
+      <% } else {%>
+      <div class="row">
+
+      </div>
+
+      <%  } %>
+      <script>
+         document.querySelector("#profilePic").onclick = () => {
+            document.querySelector("#imgUpload").click();
+         }
+
+         document.querySelector("#imgUpload").oninput = (e) => {
+            let imgFormData = new FormData()
+            imgFormData.append('userImg', document.querySelector("#imgUpload").files[0], document.querySelector("#imgUpload").files[0].name)
+            fetch('/users/img', { method: 'POST', body: imgFormData })
+               .then(res =>
+                  res.json().then(
+                     data => data.success ? window.location.reload() : null
+                  ))
+         }
+      </script>
+
+      <% if (user) { %>
+
+      <script type="text/javascript">
+         var usermap = L.map('usermap').setView([<%= user.posizione_coordinate.split(/[\s()]+/)[2] %> , <%= user.posizione_coordinate.split(/[\s()]+/)[1] %>], 13);
+
+         L.tileLayer('https://a.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+            maxZoom: 14,
+            tileSize: 512,
+            zoomOffset: -1,
+         }).addTo(usermap);
+
+         L.marker([<%= user.posizione_coordinate.split(/[\s()]+/)[2] %> , <%= user.posizione_coordinate.split(/[\s()]+/)[1] %>]).bindPopup("<%= user.nome %> <%= user.cognome %> <%= user.posizione_coordinate.split(/[\s()]+/)[2] %> , <%= user.posizione_coordinate.split(/[\s()]+/)[1] %>").addTo(usermap);
+      </script>
+
+      <% } %>
+   </main>
+
+   <%- include('../partials/footer'); %>
+
+</body>
+
+</html>
