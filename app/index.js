@@ -5,6 +5,8 @@ const expressApp = express();
 const { body, validationResult } = require('express-validator');
 const { authenticate } = require('./libs/authenticate');
 const { getUser, findUsers } = require('./libs/user');
+const { register } = require('./libs/register');
+const { getCities } = require('./libs/city')
 
 const multer = require("multer");
 const uploadImg = multer({
@@ -42,7 +44,6 @@ expressApp.post('/login', [
 
    const auth = await authenticate(req.body.email, req.body.password)
 
-
    if (auth) {
       req.session.isAuthenticated = true
       req.session.user = await getUser(auth.id)
@@ -55,10 +56,56 @@ expressApp.post('/login', [
    }
 })
 
+
+expressApp.get('/register', (req, res) => {
+   res.render('pages/register', { errors: false })
+})
+
+expressApp.post('/register', [
+   body('email').isEmail().not().isEmpty(),
+   body('password').isLength({ min: 8 }).not().isEmpty(),
+   body('nome').isString().not().isEmpty(),
+   body('cognome').isString().not().isEmpty(),
+   body('telefono').isString().not().isEmpty(),
+   body('data_nascita').isISO8601().not().isEmpty(),
+   body('sesso').isNumeric().not().isEmpty(),
+   body('citta').isNumeric().not().isEmpty()
+], async (req, res) => {
+   const inputValidator = validationResult(req);
+
+   if (!inputValidator.isEmpty()) {
+      return res.status(401).render('pages/register', { errors: inputValidator.errors });
+   }
+
+   const newUser = await register(
+      {
+         email: req.body.email,
+         password: req.body.password,
+         nome: req.body.nome,
+         cognome: req.body.cognome,
+         data_nascita: req.body.data_nascita,
+         telefono: req.body.telefono,
+         residenza_id: req.body.citta,
+         sesso_id: req.body.sesso
+      })
+
+
+   if (newUser) {
+      const auth = await authenticate(req.body.email, req.body.password)
+
+      req.session.isAuthenticated = true
+      req.session.user = await getUser(auth.id)
+      expressApp.locals.user = await getUser(auth.id)
+      res.redirect('/');
+   } else {
+      res.render('pages/register', { errors: [{ msg: "Invalid inputs!", param: "" }] })
+   }
+})
+
+
 expressApp.get('/', async (req, res) => {
    res.render('pages/find')
 })
-
 
 expressApp.get('/profile', async (req, res) => {
    res.render('pages/profile')
@@ -73,8 +120,9 @@ expressApp.get('/users/img/:userID', (req, res) => {
       img = (match[1] == req.params.userID && !img ? match : img)
    }
 
-   if (img)
+   if (img) {
       req.url = `/images/users/${img[1]}.${img[2]}`;
+   }
    else
       req.url = `/images/users/default.png`
 
@@ -82,10 +130,19 @@ expressApp.get('/users/img/:userID', (req, res) => {
 })
 
 // Multer for imgs uploads
-expressApp.post('/users/img', uploadImg, (req, res, next) => {
+expressApp.post('/users/img', (req, res, next) => {
+   const files = fs.readdirSync("./public/images/users/")
+   let matches = JSON.stringify(files).toString().matchAll(imgFileReg)
+
+   // Unlink all previous images
+   for (let match of matches) {
+      (match[1] == req.session.user.id) ? fs.unlinkSync(__dirname + `/public/images/users/${match[1]}.${match[2]}`) : null
+   }
+
    res.json({ success: true })
    res.status(200)
-})
+   next();
+}, uploadImg)
 
 
 expressApp.get('/user/:userID', async (req, res) => {
@@ -111,6 +168,19 @@ expressApp.get('/api/find/:distance', async (req, res) => {
    res.status = 200;
    res.send(JSON.stringify({ users, distance }))
 })
+
+expressApp.get('/api/cities', async (req, res) => {
+   const cities = await getCities()
+
+   res.contentType('application/json');
+   if (cities) {
+      res.status = 200
+      res.json(cities)
+   } else {
+      res.status = 400
+   }
+})
+
 
 // Finishing up...
 let port = process.argv[2] ? process.argv[2] : 8080

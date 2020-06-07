@@ -1,5 +1,5 @@
 /**
- * Agenzia Matrimoniale Cupido
+ * Bonoldi Enrico
  * 
  * Lazy loading of users map
  */
@@ -57,27 +57,30 @@
                let userDOMel = document.createElement(`li`)
                userDOMel.classList = "list-group-item d-flex justify-content-between align-items-center"
                userDOMel.onclick = () => usersMap.setView([user.posizione_coordinate.split(/[\s()]+/)[2], user.posizione_coordinate.split(/[\s()]+/)[1]], 12)
-               
+
                let userLink = document.createElement(`a`)
                userLink.href = `/user/${user.id}`
                userLink.innerHTML = ` ${user.nome} ${user.cognome} `
-
-               //let userGOTO = document.createElement(`i`)
-               //userGOTO.classList = `fas fa-map-marker-alt fa-2x d-inline-block`
-               //userGOTO.style = (user.sesso == "maschio" ? " color : cyan;" :  " color : pink;")
 
                let userIMG = document.createElement(`img`)
                userIMG.width = `50`
                userIMG.src = `/users/img/${user.id}`
 
-               userDOMel.append(userLink,userIMG)//,userGOTO)
-               usersList.appendChild(userDOMel) 
+               userDOMel.append(userLink, userIMG)//,userGOTO)
+               usersList.appendChild(userDOMel)
                L.marker([user.posizione_coordinate.split(/[\s()]+/)[2], user.posizione_coordinate.split(/[\s()]+/)[1]], { icon: blueIcon }).bindPopup(`<img src="/users/img/${user.id}" width="50" ><a  href="/user/${user.id}">${user.nome} ${user.cognome} ( ${Math.round(user.distance_between) / 1000} km)</a>`).addTo(usersLayer)
-            }else{
+            } else {
                L.marker([user.posizione_coordinate.split(/[\s()]+/)[2], user.posizione_coordinate.split(/[\s()]+/)[1]], { icon: redIcon }).addTo(usersLayer)
             }
-
          })
+
+         if (users.length <= 1) {
+            let userDOMel = document.createElement(`li`)
+            userDOMel.classList = "list-group-item d-flex justify-content-between align-items-center"
+            userDOMel.innerHTML = "<b>Nessun utente trovato...</b>"
+
+            usersList.appendChild(userDOMel)
+         }
 
          L.circle([currentUser.posizione_coordinate.split(/[\s()]+/)[2], currentUser.posizione_coordinate.split(/[\s()]+/)[1]], {
             color: 'green',

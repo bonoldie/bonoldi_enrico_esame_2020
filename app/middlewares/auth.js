@@ -1,9 +1,11 @@
 // Auth Middleware
-// Checks if exists a userID
+const publicRoutes = ['/api/cities', '/login', '/register']
+
+// Checks if exists a userID & route is private
 const authMiddleware = (req, res, next) => {
-   if(!req.session.isAuthenticated && req.originalUrl != "/login"){
+   if (!req.session.isAuthenticated && !publicRoutes.includes(req.originalUrl)) {
       res.redirect('/login')
-   }else {
+   } else {
       next();
    }
 }
