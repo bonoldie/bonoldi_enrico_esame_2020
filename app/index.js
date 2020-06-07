@@ -4,7 +4,7 @@ const express = require("express");
 const expressApp = express();
 const { body, validationResult } = require('express-validator');
 const { authenticate } = require('./libs/authenticate');
-const { getUser, findUsers, updateInteresseSesso, getInteresseSesso } = require('./libs/user');
+const { getUser, findUsers, updateorientamentoSesso, getorientamentoSesso } = require('./libs/user');
 const { register } = require('./libs/register');
 const { getCities } = require('./libs/city')
 
@@ -180,20 +180,20 @@ expressApp.get('/api/cities', async (req, res) => {
    }
 })
 
-// Aggiorna interesse_sesso
-expressApp.post('/api/sesso/interesse',
+// Aggiorna orientamento
+expressApp.post('/api/sesso/orientamento',
    [
       body('sesso_maschio').isEmpty().not(),
       body('sesso_femmina').isEmpty().not()
    ],
    async (req, res,next) => {
-      const interesseValidator = validationResult(req);
+      const orientamentoValidator = validationResult(req);
 
-      if (!interesseValidator.isEmpty()) {
+      if (!orientamentoValidator.isEmpty()) {
          res.status = 400
       }
 
-      if (await updateInteresseSesso(req.session.user.id, { sesso_maschio: req.body.sesso_maschio, sesso_femmina: req.body.sesso_femmina })) {
+      if (await updateorientamentoSesso(req.session.user.id, { sesso_maschio: req.body.sesso_maschio, sesso_femmina: req.body.sesso_femmina })) {
          req.session.user = await getUser(req.session.user.id)
          expressApp.locals.user = req.session.user
          res.status = 200
@@ -203,9 +203,9 @@ expressApp.post('/api/sesso/interesse',
       res.send()
    })
 
-expressApp.get('/api/sesso/interesse',
+expressApp.get('/api/sesso/orientamento',
    async (req, res) => {
-      res.json(await getInteresseSesso(req.session.user.id))
+      res.json(await getorientamentoSesso(req.session.user.id))
    })
 
 

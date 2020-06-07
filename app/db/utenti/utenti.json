@@ -8,7 +8,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1020",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },{
       "telefono":"11111111",
       "email":"utente0@email.example",
@@ -18,7 +18,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1001",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },{
       "telefono":"22222222",
       "email":"utente1@email.example",
@@ -28,7 +28,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1002",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },{
       "telefono":"33333333",
       "email":"utente2@email.example",
@@ -38,7 +38,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1003",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },{
       "telefono":"44444444",
       "email":"utente3@email.example",
@@ -48,7 +48,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1004",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },{
       "telefono":"55555555",
       "email":"utente4@email.example",
@@ -58,7 +58,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1005",
       "sesso_id":0,
-      "interesse_sesso": 1
+      "orientamento": 1
    },
    {
       "telefono":"66666666",
@@ -69,7 +69,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1006",
       "sesso_id":1,
-      "interesse_sesso": 0
+      "orientamento": 0
    },{
       "telefono":"77777777",
       "email":"utente6@email.example",
@@ -79,7 +79,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1007",
       "sesso_id":1,
-      "interesse_sesso": 0
+      "orientamento": 0
    },{
       "telefono":"88888888",
       "email":"utente7@email.example",
@@ -89,7 +89,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1008",
       "sesso_id":1,
-      "interesse_sesso": 0
+      "orientamento": 0
    },{
       "telefono":"99999999",
       "email":"utente8@email.example",
@@ -99,7 +99,7 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"1009",
       "sesso_id":1,
-      "interesse_sesso": 0
+      "orientamento": 0
    },{
       "telefono":"1101010101",
       "email":"utente9@email.example",
@@ -109,6 +109,6 @@
       "data_nascita":"1990/01/01",
       "residenza_id":"10010",
       "sesso_id":1,
-      "interesse_sesso": 0
+      "orientamento": 0
    }
 ]

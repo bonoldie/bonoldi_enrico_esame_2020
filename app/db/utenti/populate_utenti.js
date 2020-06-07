@@ -42,17 +42,17 @@ module.exports = (async (pool) => {
          }
       }))
 
-      await new Promise((resolve, reject) => fs.readFile(__dirname + "/interesse_sesso.json", "utf8", async (err, data) => {
+      await new Promise((resolve, reject) => fs.readFile(__dirname + "/orientamento.json", "utf8", async (err, data) => {
          await client.query("BEGIN");
    
          try {
             JSON.parse(data).forEach(async (entry) => {
                if (entry.sesso_id != undefined && entry.utente_id != undefined)
-                  await client.query(`INSERT INTO interesse_sesso (utente_id,sesso_id) VALUES ($1, $2) `, [entry.utente_id, entry.sesso_id]);
+                  await client.query(`INSERT INTO orientamento (utente_id,sesso_id) VALUES ($1, $2) `, [entry.utente_id, entry.sesso_id]);
             })
    
             await client.query('COMMIT');
-            console.log("-- populated table >> interesse_sesso <<  \n");
+            console.log("-- populated table >> orientamento <<  \n");
    
             resolve();
    

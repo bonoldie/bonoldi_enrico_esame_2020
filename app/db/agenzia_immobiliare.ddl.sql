@@ -5,7 +5,7 @@
 -- DROPS 
 DROP VIEW IF EXISTS public.info_utente;
 
-DROP TABLE IF EXISTS public.interesse_sesso;
+DROP TABLE IF EXISTS public.orientamento;
 
 DROP TABLE IF EXISTS public.utente;
 
@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS public.citta;
 
 DROP TABLE IF EXISTS public.cap;
 
--- CREATES
+-- TABLES
 CREATE TABLE public.sesso (
    id int4 NOT NULL,
    nome varchar(255) NOT NULL,
@@ -59,14 +59,15 @@ CREATE TABLE public.utente (
    )
 );
 
-CREATE TABLE public.interesse_sesso (
+CREATE TABLE public.orientamento (
    utente_id int4 NOT NULL,
    sesso_id int4 NOT NULL,
-   CONSTRAINT interesse_pk PRIMARY KEY (utente_id, sesso_id),
-   CONSTRAINT interesse_sesso_sesso_fk FOREIGN KEY (sesso_id) REFERENCES sesso(id),
-   CONSTRAINT interesse_sesso_utente_fk FOREIGN KEY (utente_id) REFERENCES utente(id)
+   CONSTRAINT orientramento_pk PRIMARY KEY (utente_id, sesso_id),
+   CONSTRAINT orientamento_fk FOREIGN KEY (sesso_id) REFERENCES sesso(id),
+   CONSTRAINT orientamento_utente_fk FOREIGN KEY (utente_id) REFERENCES utente(id)
 );
 
+-- VIEWS
 CREATE
 OR REPLACE VIEW public.info_utente AS (
    select
@@ -82,7 +83,7 @@ OR REPLACE VIEW public.info_utente AS (
       info.istat_id,
       info.posizione,
       info.sesso AS sesso,
-      interesse_sesso_aggregato.interesse_aggregato
+      orientamento_aggregato.orientamento_aggregato
    from
       (
          SELECT
@@ -108,14 +109,14 @@ OR REPLACE VIEW public.info_utente AS (
       ) as info
       left join (
          SELECT
-            interesse_sesso.utente_id,
-            array_to_string(array_agg(sesso.nome), ',' :: text) AS interesse_aggregato
+            orientamento.utente_id,
+            array_to_string(array_agg(sesso.nome), ',' :: text) AS orientamento_aggregato
          FROM
-            interesse_sesso,
+            orientamento,
             sesso sesso
          WHERE
-            interesse_sesso.sesso_id = sesso.id
+            orientamento.sesso_id = sesso.id
          GROUP BY
-            interesse_sesso.utente_id
-      ) as interesse_sesso_aggregato on interesse_sesso_aggregato.utente_id = info.id
+            orientamento.utente_id
+      ) as orientamento_aggregato on orientamento_aggregato.utente_id = info.id
 );

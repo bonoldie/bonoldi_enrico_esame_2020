@@ -42,8 +42,8 @@ const findUsers = async (userID, distance) => {
    from info_utente 
    where 
       (ST_Distance(info_utente.posizione, (select posizione from info_utente where info_utente.id = $1)) < $2
-      AND position((select sesso from info_utente where info_utente.id = $1) in info_utente.interesse_aggregato) > 0
-     AND position(info_utente.sesso in (select interesse_aggregato from info_utente where info_utente.id = $1)) > 0) OR info_utente.id = $1`,
+      AND position((select sesso from info_utente where info_utente.id = $1) in info_utente.orientamento_aggregato) > 0
+     AND position(info_utente.sesso in (select orientamento_aggregato from info_utente where info_utente.id = $1)) > 0) OR info_utente.id = $1`,
       [userID, distance])
 
       .then(res => {
@@ -57,19 +57,19 @@ const findUsers = async (userID, distance) => {
 }
 
 
-const updateInteresseSesso = async (userID, { sesso_maschio, sesso_femmina }) => {
+const updateorientamentoSesso = async (userID, { sesso_maschio, sesso_femmina }) => {
    const client = await db()
    let status = true
-   await client.query("DELETE FROM interesse_sesso WHERE utente_id = $1", [userID])
+   await client.query("DELETE FROM orientamento WHERE utente_id = $1", [userID])
 
    if (sesso_maschio) {
-      status = status && await client.query("INSERT INTO interesse_sesso (utente_id,sesso_id) VALUES($1,(SELECT id FROM sesso WHERE nome = 'maschio'))", [userID])
+      status = status && await client.query("INSERT INTO orientamento (utente_id,sesso_id) VALUES($1,(SELECT id FROM sesso WHERE nome = 'maschio'))", [userID])
          .then(res => true)
          .catch(err => false)
    }
 
    if (sesso_femmina) {
-      status = status && await client.query("INSERT INTO interesse_sesso (utente_id,sesso_id) VALUES($1,(SELECT id FROM sesso WHERE nome = 'femmina'))", [userID])
+      status = status && await client.query("INSERT INTO orientamento (utente_id,sesso_id) VALUES($1,(SELECT id FROM sesso WHERE nome = 'femmina'))", [userID])
          .then(res => true)
          .catch(err => false)
    }
@@ -80,4 +80,4 @@ const updateInteresseSesso = async (userID, { sesso_maschio, sesso_femmina }) =>
 }
 
 
-module.exports = { getUser, getUsers, findUsers, updateInteresseSesso }
+module.exports = { getUser, getUsers, findUsers, updateorientamentoSesso }

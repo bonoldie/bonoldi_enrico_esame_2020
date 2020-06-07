@@ -15,6 +15,10 @@
   - [2. *Modello concettuale e logico*](#2-modello-concettuale-e-logico)
       - [MODELLO ER](#modello-er)
       - [MODELLO LOGICO](#modello-logico)
+      - [NOTE DI REALIZZAZIONE](#note-di-realizzazione)
+  - [3. IMPLEMENTAZIONE DATABASE](#3-implementazione-database)
+  - [4. QUERY SIGNIFICATIVE](#4-query-significative)
+      - [RICERCA DEI POSSIBILI PARTNER NELLA ZONE](#ricerca-dei-possibili-partner-nella-zone)
 - [SISTEMI E RETI](#sistemi-e-reti)
 
 
@@ -90,9 +94,82 @@ La struttura del progetto è la seguente:
 CITTA(<ins>istat_id</ins>,comune,provincia,regione,posizione)  
 CAP(*<ins>istat_id</ins>*,<ins>CAP</ins>)  
 
-SESSO(<ins>id</ins>,nome)
-UTENTE(<ins>id</ins>,email,password,nome,cognome,data_nascita,*sesso_id*,*residenza_id*,telefono)
+SESSO(<ins>id</ins>,nome)  
+UTENTE(<ins>id</ins>,*sesso_id*,*residenza_id*,email,password,nome,cognome,data_nascita,telefono)
 
-)
+ORIENTAMENTO(*<ins>	utente_id </ins>*,	*<ins>sesso_id </ins>*)
+
+#### NOTE DI REALIZZAZIONE
+
+- La tabella ```CAP``` è attualmente inutilizzata ma è stata inserita per completezza.
+- E' stata inserita una vista per facilitare l'accesso ai dati utente. 
+
+
+## 3. IMPLEMENTAZIONE DATABASE
+
+DDL disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_immobiliare.ddl.sql) ( local path : ```app/db/agenzia_immobiliare.ddl.sql``` )
+
+
+## 4. QUERY SIGNIFICATIVE
+
+#### RICERCA DEI POSSIBILI PARTNER NELLA ZONE
+
+$1 - id utente  
+$2 - distanza dall'utente corrente (in metri) 
+
+```sql
+SELECT
+   *,
+   ST_AsText(posizione) as posizione_coordinate,
+   ST_Distance(
+      info_utente.posizione,
+      (
+         SELECT
+            posizione
+         from
+            info_utente
+         where
+            info_utente.id = $1
+      )
+   ) as distance_between
+from
+   info_utente
+where
+   (
+      ST_Distance(
+         info_utente.posizione,
+         (
+            SELECT
+               posizione
+            from
+               info_utente
+            where
+               info_utente.id = $1
+         )
+      ) < $2
+      AND position(
+         (
+            SELECT
+               sesso
+            from
+               info_utente
+            where
+               info_utente.id = $1
+         ) in info_utente.orientamento_aggregato
+      ) > 0
+      AND position(
+         info_utente.sesso in (
+            SELECT
+               orientamento_aggregato
+            from
+               info_utente
+            where
+               info_utente.id = $1
+         )
+      ) > 0
+   )
+   OR info_utente.id = $1
+````
+
 
 # SISTEMI E RETI 
