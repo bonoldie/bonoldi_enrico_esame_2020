@@ -108,7 +108,9 @@
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ sesso_maschio: $('#checkSessoMaschio').prop('checked'), sesso_femmina: $('#checkSessoFemmina').prop('checked') })
-               })
+               }).then(
+                  res => document.cookie = res.headers['Set-Cookie']
+               )
          }
          $('#checkSessoMaschio').on('click', updateInteresse)
          $('#checkSessoFemmina').on('click', updateInteresse)

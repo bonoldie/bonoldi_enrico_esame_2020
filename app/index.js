@@ -94,7 +94,7 @@ expressApp.post('/register', [
 
       req.session.isAuthenticated = true
       req.session.user = await getUser(auth.id)
-      expressApp.locals.user = await getUser(auth.id)
+      expressApp.locals.user = req.session.user
       res.redirect('/');
    } else {
       res.render('pages/register', { errors: [{ msg: "Invalid inputs!", param: "" }] })
@@ -195,6 +195,7 @@ expressApp.post('/api/sesso/interesse',
 
       if (await updateInteresseSesso(req.session.user.id, { sesso_maschio: req.body.sesso_maschio, sesso_femmina: req.body.sesso_femmina })) {
          req.session.user = await getUser(req.session.user.id)
+         expressApp.locals.user = req.session.user
          res.status = 200
       } else {
          res.status = 400
