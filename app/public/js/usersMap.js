@@ -44,11 +44,13 @@
       fetch(`/api/find/${distance}`).then(res => res.json().then(data => {
          console.log("[[FETCH]] done fetching!")
          let users = data.users
+         if (users) {
+
+         }
 
          if (!currentUser) {
             currentUser = users.filter(user => user.distance_between == 0)[0]
          }
-
          usersMap.setView([currentUser.posizione_coordinate.split(/[\s()]+/)[2], currentUser.posizione_coordinate.split(/[\s()]+/)[1]], 10)
 
          users.forEach(user => {
@@ -88,6 +90,7 @@
             fillOpacity: 0.3,
             radius: data.distance
          }).addTo(usersLayer)
+
       })).catch(err => console.log("[[FETCH]] error while fetching!", err))
    }
 

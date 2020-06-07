@@ -43,14 +43,20 @@ CREATE TABLE public.utente (
    "password" varchar(255) NOT NULL,
    nome varchar(40) NOT NULL,
    cognome varchar(40) NOT NULL,
-   data_nascita date NOT NULL ,
+   data_nascita date NOT NULL,
    sesso_id int4 NOT NULL,
    residenza_id varchar(10) NULL,
    telefono varchar(11) NULL,
    CONSTRAINT utente_pk PRIMARY KEY (id),
    CONSTRAINT utente_citta_fk FOREIGN KEY (residenza_id) REFERENCES citta(istat_id),
    CONSTRAINT utente_sesso_fk FOREIGN KEY (sesso_id) REFERENCES sesso(id),
-   CHECK (extract( year from age(data_nascita::date)) >= 18)
+   CHECK (
+      extract(
+         year
+         from
+            age(data_nascita :: date)
+      ) >= 18
+   )
 );
 
 CREATE TABLE public.interesse_sesso (
@@ -62,24 +68,54 @@ CREATE TABLE public.interesse_sesso (
 );
 
 CREATE
-OR REPLACE VIEW public.info_utente AS
-SELECT
-   utente.id,
-   utente.email,
-   utente.nome,
-   utente.cognome,
-   utente.data_nascita,
-   utente.telefono,
-   citta.comune,
-   citta.regione,
-   citta.provincia,
-   citta.istat_id,
-   citta.posizione,
-   sesso.nome AS sesso
-FROM
-   utente,
-   citta,
-   sesso
-WHERE
-   utente.residenza_id :: text = citta.istat_id :: text
-   AND utente.sesso_id = sesso.id;
+OR REPLACE VIEW public.info_utente AS (
+   select
+      info.id,
+      info.email,
+      info.nome,
+      info.cognome,
+      info.data_nascita,
+      info.telefono,
+      info.comune,
+      info.regione,
+      info.provincia,
+      info.istat_id,
+      info.posizione,
+      info.sesso AS sesso,
+      interesse_sesso_aggregato.interesse_aggregato
+   from
+      (
+         SELECT
+            utente.id,
+            utente.email,
+            utente.nome,
+            utente.cognome,
+            utente.data_nascita,
+            utente.telefono,
+            citta.comune,
+            citta.regione,
+            citta.provincia,
+            citta.istat_id,
+            citta.posizione,
+            sesso.nome AS sesso
+         FROM
+            utente,
+            citta,
+            sesso
+         WHERE
+            utente.residenza_id :: text = citta.istat_id :: text
+            AND utente.sesso_id = sesso.id
+      ) as info
+      left join (
+         SELECT
+            interesse_sesso.utente_id,
+            array_to_string(array_agg(sesso.nome), ',' :: text) AS interesse_aggregato
+         FROM
+            interesse_sesso,
+            sesso sesso
+         WHERE
+            interesse_sesso.sesso_id = sesso.id
+         GROUP BY
+            interesse_sesso.utente_id
+      ) as interesse_sesso_aggregato on interesse_sesso_aggregato.utente_id = info.id
+);

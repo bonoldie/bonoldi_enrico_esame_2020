@@ -4,7 +4,7 @@ const express = require("express");
 const expressApp = express();
 const { body, validationResult } = require('express-validator');
 const { authenticate } = require('./libs/authenticate');
-const { getUser, findUsers } = require('./libs/user');
+const { getUser, findUsers, updateInteresseSesso, getInteresseSesso } = require('./libs/user');
 const { register } = require('./libs/register');
 const { getCities } = require('./libs/city')
 
@@ -56,7 +56,6 @@ expressApp.post('/login', [
    }
 })
 
-
 expressApp.get('/register', (req, res) => {
    res.render('pages/register', { errors: false })
 })
@@ -84,7 +83,7 @@ expressApp.post('/register', [
          nome: req.body.nome,
          cognome: req.body.cognome,
          data_nascita: req.body.data_nascita,
-         telefono: req.body.telefono,
+         tefemminalefono: req.body.telefono,
          residenza_id: req.body.citta,
          sesso_id: req.body.sesso
       })
@@ -180,6 +179,33 @@ expressApp.get('/api/cities', async (req, res) => {
       res.status = 400
    }
 })
+
+// Aggiorna interesse_sesso
+expressApp.post('/api/sesso/interesse',
+   [
+      body('sesso_maschio').isEmpty().not(),
+      body('sesso_femmina').isEmpty().not()
+   ],
+   async (req, res,next) => {
+      const interesseValidator = validationResult(req);
+
+      if (!interesseValidator.isEmpty()) {
+         res.status = 400
+      }
+
+      if (await updateInteresseSesso(req.session.user.id, { sesso_maschio: req.body.sesso_maschio, sesso_femmina: req.body.sesso_femmina })) {
+         req.session.user = await getUser(req.session.user.id)
+         res.status = 200
+      } else {
+         res.status = 400
+      }
+      res.send()
+   })
+
+expressApp.get('/api/sesso/interesse',
+   async (req, res) => {
+      res.json(await getInteresseSesso(req.session.user.id))
+   })
 
 
 // Finishing up...

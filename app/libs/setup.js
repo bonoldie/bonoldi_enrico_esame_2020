@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 module.exports = (appInstance) => {
    appInstance.use(express.static('public'));
    appInstance.use(bodyParser.urlencoded({ extended: false }));
+   appInstance.use(bodyParser.json());
+   
    appInstance.use(session({
       secret: 'myAppSecret',
       resave: false,

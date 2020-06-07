@@ -1,0 +1,82 @@
+[
+   {
+      "utente_id": 1,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 2,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 3,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 4,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 5,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 6,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 7,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 8,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 9,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 10,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 11,
+      "sesso_id": 1
+   },
+   {
+      "utente_id": 1,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 2,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 3,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 4,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 5,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 6,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 7,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 8,
+      "sesso_id": 0
+   },
+   {
+      "utente_id": 9,
+      "sesso_id": 0
+   }
+]

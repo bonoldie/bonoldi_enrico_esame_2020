@@ -41,9 +41,33 @@ module.exports = (async (pool) => {
             reject(e)
          }
       }))
+
+      await new Promise((resolve, reject) => fs.readFile(__dirname + "/interesse_sesso.json", "utf8", async (err, data) => {
+         await client.query("BEGIN");
+   
+         try {
+            JSON.parse(data).forEach(async (entry) => {
+               if (entry.sesso_id != undefined && entry.utente_id != undefined)
+                  await client.query(`INSERT INTO interesse_sesso (utente_id,sesso_id) VALUES ($1, $2) `, [entry.utente_id, entry.sesso_id]);
+            })
+   
+            await client.query('COMMIT');
+            console.log("-- populated table >> interesse_sesso <<  \n");
+   
+            resolve();
+   
+         } catch (e) {
+            await client.query('ROLLBACK');
+            reject(e)
+         }
+      }))
+
    } catch (e) {
       console.log("[[ERROR]] POPULATING UTENTI")
    }
+
+   
+
 
 
 
