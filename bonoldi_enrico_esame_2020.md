@@ -24,10 +24,15 @@
     - [Ricerca](#ricerca)
     - [Profilo account](#profilo-account)
     - [Profilo utente](#profilo-utente)
+  - [6.a NoSql](#6a-nosql)
+  - [6.b Sviluppo](#6b-sviluppo)
 - [SISTEMI E RETI](#sistemi-e-reti)
+  - [Navigazione web](#navigazione-web)
+    - [Soluzione HTTP Secure](#soluzione-http-secure)
+    - [Funzionamento](#funzionamento)
 
 --- 
-## *Descrizione* 
+## *Descrizione* <!-- omit in toc -->
 > Un’agenzia matrimoniale vuole gestire e pubblicare con un’applicazione web le informazioni per la
 ricerca della propria anima gemella in un dato territorio.
 
@@ -213,9 +218,11 @@ folders:
 entry file **index.js** : 
   - setup di expressJS e registrazione routes.
 
+env file **env.json**
+
 ### Login/Registrazione
 
-- Inizializzazione di una nuova sessione
+- Inizializzazione di una nuova sessiones
 - Controllo accesso via [middleware](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5) ([app/middlewares/auth.js](app/middlewares/auth.js#L5))
 - Validazione e registrazione
 
@@ -244,5 +251,34 @@ entry file **index.js** :
 
 ![user page](http://localhost:8080/assets/user.png)
 
+
+## 6.a NoSql 
+
+Una alternativa efficace a **postgres~postgis** è **mongodb~geoJSON**.  
+
+**GeoJSON** ([RFC 7946](https://tools.ietf.org/html/rfc7946)) è una specifica che introduce nel tipo di file **JSON** i riferimenti geospaziali (Point,LineString,...) e il sistema di coordinate.
+
+## 6.b Sviluppo
+
+Per il mantenimento del codice è stato usato **GIT**
+
 # SISTEMI E RETI 
+
+## *Descrizione* <!-- omit in toc -->
+>Esporre una possibile soluzione tecnologica, giustificandola, che consenta all’agenzia di offrire ai clienti la possibilità di accedere al servizio offerto in totale sicurezza e riservatezza. Illustrare in particolare gli aspetti di sicurezza delle comunicazioni a base web.
+
+## Navigazione web
+
+Quando navigiamo nella rete percorriamo "strade" non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovra distribuire dati personali.
+
+### Soluzione HTTP Secure
+
+L'applicazione web usa **HTTP** e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente **nessun meccanismo di crittografia** e dati viaggiano in chiaro tra client e server.  
+
+Per mettere in sicurezza **HTTP** si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
+
+### Funzionamento
+
+La crittografia a **chiave asimmetrica** ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire le chiavi sorge un problema di autenticità che è risolto dagli **Enti certificatori**
+ che verificano la chiave pubblica utilizzata per la comunicazione.
 

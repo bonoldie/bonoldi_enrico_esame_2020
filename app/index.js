@@ -1,5 +1,6 @@
 // Import modules
 const fs = require("fs")
+const https = require('https');
 const express = require("express");
 const expressApp = express();
 const { body, validationResult } = require('express-validator');
@@ -107,7 +108,7 @@ expressApp.get('/', async (req, res) => {
 })
 
 expressApp.get('/profile', async (req, res) => {
-   res.render('pages/profile',{user:req.session.user})
+   res.render('pages/profile', { user: req.session.user })
 })
 // Proxy route to handle users imgs 
 expressApp.get('/users/img/:userID', (req, res) => {
@@ -186,7 +187,7 @@ expressApp.post('/api/sesso/orientamento',
       body('sesso_maschio').isEmpty().not(),
       body('sesso_femmina').isEmpty().not()
    ],
-   async (req, res,next) => {
+   async (req, res, next) => {
       const orientamentoValidator = validationResult(req);
 
       if (!orientamentoValidator.isEmpty()) {
@@ -213,3 +214,10 @@ expressApp.get('/api/sesso/orientamento',
 let port = process.argv[2] ? process.argv[2] : 8080
 expressApp.listen(port);
 console.log(`LISTENING ON PORT ${port}...`);
+
+//https.createServer(
+//   { key: fs.readFileSync('./certs/localhost.key', 'utf8'), cert: fs.readFileSync('./certs/localhost.crt', 'utf8'),passphrase:'admin' },
+//   expressApp
+//).listen(8443)
+//console.log(`LISTENING HTTPS ON PORT ${8443}...`);
+
