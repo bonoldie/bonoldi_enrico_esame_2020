@@ -46,7 +46,7 @@ CREATE TABLE public.utente (
    data_nascita date NOT NULL,
    sesso_id int4 NOT NULL,
    residenza_id varchar(10) NULL,
-   telefono varchar(11) NULL,
+   telefono varchar(20) NULL,
    CONSTRAINT utente_pk PRIMARY KEY (id),
    CONSTRAINT utente_citta_fk FOREIGN KEY (residenza_id) REFERENCES citta(istat_id),
    CONSTRAINT utente_sesso_fk FOREIGN KEY (sesso_id) REFERENCES sesso(id),

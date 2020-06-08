@@ -47,7 +47,7 @@ expressApp.post('/login', [
    if (auth) {
       req.session.isAuthenticated = true
       req.session.user = await getUser(auth.id)
-      expressApp.locals.user = await getUser(auth.id)
+      expressApp.locals.user = req.session.user
       res.redirect('/');
    } else {
       req.session.isAuthenticated = false
@@ -107,7 +107,7 @@ expressApp.get('/', async (req, res) => {
 })
 
 expressApp.get('/profile', async (req, res) => {
-   res.render('pages/profile')
+   res.render('pages/profile',{user:req.session.user})
 })
 // Proxy route to handle users imgs 
 expressApp.get('/users/img/:userID', (req, res) => {
