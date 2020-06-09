@@ -84,7 +84,7 @@ expressApp.post('/register', [
          nome: req.body.nome,
          cognome: req.body.cognome,
          data_nascita: req.body.data_nascita,
-         tefemminalefono: req.body.telefono,
+         telefono: req.body.telefono,
          residenza_id: req.body.citta,
          sesso_id: req.body.sesso
       })
