@@ -36,6 +36,6 @@ path: ```app```
 
 **utenti**
 
-email: utente[n]@email.example (eg. utente1@email.example)
+email: utente[n]@email.example (eg. utente1@email.example)  
 password: admin
 
