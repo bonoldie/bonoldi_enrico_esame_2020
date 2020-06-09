@@ -273,12 +273,23 @@ Quando navigiamo nella rete percorriamo "strade" non protette e gestite da terzi
 
 ### Soluzione HTTP Secure
 
-L'applicazione web usa **HTTP** e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente **nessun meccanismo di crittografia** e dati viaggiano in chiaro tra client e server.  
+L'applicazione web usa **HTTP** e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente **nessun meccanismo di crittografia** e i dati viaggiano in chiaro tra client e server.  
 
 Per mettere in sicurezza **HTTP** si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
 
 ### Funzionamento
+s
+La crittografia a **chiave asimmetrica** ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di **Enti certificatori** che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.  
 
-La crittografia a **chiave asimmetrica** ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire le chiavi sorge un problema di autenticità che è risolto dagli **Enti certificatori**
- che verificano la chiave pubblica utilizzata per la comunicazione.
+1. Generiamo una chiave asimmetrica (RSA)   
+   - ``` openssl genrsa -des3 -passout pass:admin -out agenzia_matrimoniale.key 2048 ```    
+2. Generiamo la **CSR** (Certificate Signing Request), in questo modo chiediamo all'ente di approvare la nostra richiesta per la generazione di un certificato. In questo vanno inseriti una serie di informazioni circa il servizio che vogliamo certificare.
+   -  ```openssl req -new -key agenzia_matrimoniale.key -out agenzia_matrimoniale.csr```
+3. La nostra richiesta di certificato viene inviata all'ente e in caso di approvazione ottenia il certificato vero e proprio (```agenzia_matrimoniale.crt```).  
+Nel nostro caso non avendo a disposizione un ente certificatore la csr è stata auto verificata con ```openssl``` con una durata di 365 giorni.   
+**NOTA** : non  essendo noi un ente certificatore non possiamo dare nessuna garanzia sul certificato, che rimane comunque utilizzabile ma non "sicuro"
+   - ```openssl x509 -req -days 365 -in agenzia_matrimoniale.csr -signkey agenzia_matrimoniale.key  -out agenzia_matrimoniale.crt```
 
+Questo è il risultato finale
+
+![cert](http://localhost:8080/assets/cert.png)

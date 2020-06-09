@@ -215,9 +215,9 @@ let port = process.argv[2] ? process.argv[2] : 8080
 expressApp.listen(port);
 console.log(`LISTENING ON PORT ${port}...`);
 
-//https.createServer(
-//   { key: fs.readFileSync('./certs/localhost.key', 'utf8'), cert: fs.readFileSync('./certs/localhost.crt', 'utf8'),passphrase:'admin' },
-//   expressApp
-//).listen(8443)
-//console.log(`LISTENING HTTPS ON PORT ${8443}...`);
+https.createServer(
+   { key: fs.readFileSync('./cert/agenzia_matrimoniale.key', 'utf8'), cert: fs.readFileSync('./cert/agenzia_matrimoniale.crt', 'utf8'),passphrase:'admin' },
+   expressApp
+).listen(8443)
+console.log(`LISTENING HTTPS ON PORT ${8443}...`);
 

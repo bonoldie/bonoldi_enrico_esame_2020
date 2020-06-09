@@ -65,12 +65,23 @@
 <li><a href="#profilo-utente">Profilo utente</a></li>
 </ul>
 </li>
+<li><a href="#6a-nosql">6.a NoSql</a></li>
+<li><a href="#6b-sviluppo">6.b Sviluppo</a></li>
 </ul>
 </li>
-<li><a href="#sistemi-e-reti">SISTEMI E RETI</a></li>
+<li><a href="#sistemi-e-reti">SISTEMI E RETI</a>
+<ul>
+<li><a href="#navigazione-web">Navigazione web</a>
+<ul>
+<li><a href="#soluzione-http-secure">Soluzione HTTP Secure</a></li>
+<li><a href="#funzionamento">Funzionamento</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <hr>
-<h2 id="descrizione"><em>Descrizione</em></h2>
+<h2 id="descrizione-"><em>Descrizione</em> <!-- omit in toc --></h2>
 <blockquote>
 <p>Un’agenzia matrimoniale vuole gestire e pubblicare con un’applicazione web le informazioni per la
 ricerca della propria anima gemella in un dato territorio.</p>
@@ -230,9 +241,23 @@ $2 - distanza dall'utente corrente (in metri)</p>
    orientamento.utente_id
 </div></code></pre>
 <h2 id="5-applicazione-web-implementazione-completa">5. Applicazione Web (implementazione completa)</h2>
+<p>path : <code>app</code></p>
+<p>folders:</p>
+<ul>
+<li><strong>libs</strong> : utilities per accesso al db (registrazione,login,...)</li>
+<li><strong>db</strong> : file per il setup e popolamento del db</li>
+<li><strong>middlewares</strong></li>
+<li><strong>public</strong> : directory per servire file statici (js,css,assets,...)</li>
+<li><strong>views</strong> : templates e sections per <em>EJS</em></li>
+</ul>
+<p>entry file <strong>index.js</strong> :</p>
+<ul>
+<li>setup di expressJS e registrazione routes.</li>
+</ul>
+<p>env file <strong>env.json</strong></p>
 <h3 id="loginregistrazione">Login/Registrazione</h3>
 <ul>
-<li>Inizializzazione di una nuova sessione</li>
+<li>Inizializzazione di una nuova sessiones</li>
 <li>Controllo accesso via <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5">middleware</a> (<a href="app/middlewares/auth.js#L5">app/middlewares/auth.js</a>)</li>
 <li>Validazione e registrazione</li>
 </ul>
@@ -263,7 +288,45 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <li>Visionare i dati dell'account di un utente iscritto alla piattaforma</li>
 </ul>
 <p><img src="http://localhost:8080/assets/user.png" alt="user page"></p>
+<h2 id="6a-nosql">6.a NoSql</h2>
+<p>Una alternativa efficace a <strong>postgres~postgis</strong> è <strong>mongodb~geoJSON</strong>.</p>
+<p><strong>GeoJSON</strong> (<a href="https://tools.ietf.org/html/rfc7946">RFC 7946</a>) è una specifica che introduce nel tipo di file <strong>JSON</strong> i riferimenti geospaziali (Point,LineString,...) e il sistema di coordinate.</p>
+<h2 id="6b-sviluppo">6.b Sviluppo</h2>
+<p>Per il mantenimento del codice è stato usato <strong>GIT</strong></p>
 <h1 id="sistemi-e-reti">SISTEMI E RETI</h1>
+<h2 id="descrizione--1"><em>Descrizione</em> <!-- omit in toc --></h2>
+<blockquote>
+<p>Esporre una possibile soluzione tecnologica, giustificandola, che consenta all’agenzia di offrire ai clienti la possibilità di accedere al servizio offerto in totale sicurezza e riservatezza. Illustrare in particolare gli aspetti di sicurezza delle comunicazioni a base web.</p>
+</blockquote>
+<h2 id="navigazione-web">Navigazione web</h2>
+<p>Quando navigiamo nella rete percorriamo &quot;strade&quot; non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovra distribuire dati personali.</p>
+<h3 id="soluzione-http-secure">Soluzione HTTP Secure</h3>
+<p>L'applicazione web usa <strong>HTTP</strong> e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente <strong>nessun meccanismo di crittografia</strong> e i dati viaggiano in chiaro tra client e server.</p>
+<p>Per mettere in sicurezza <strong>HTTP</strong> si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.</p>
+<h3 id="funzionamento">Funzionamento</h3>
+<p>s
+La crittografia a <strong>chiave asimmetrica</strong> ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di <strong>Enti certificatori</strong> che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.</p>
+<ol>
+<li>Generiamo una chiave asimmetrica (RSA)
+<ul>
+<li><code>openssl genrsa -des3 -passout pass:admin -out agenzia_matrimoniale.key 2048</code></li>
+</ul>
+</li>
+<li>Generiamo la <strong>CSR</strong> (Certificate Signing Request), in questo modo chiediamo all'ente di approvare la nostra richiesta per la generazione di un certificato. In questo vanno inseriti una serie di informazioni circa il servizio che vogliamo certificare.
+<ul>
+<li><code>openssl req -new -key agenzia_matrimoniale.key -out agenzia_matrimoniale.csr</code></li>
+</ul>
+</li>
+<li>La nostra richiesta di certificato viene inviata all'ente e in caso di approvazione ottenia il certificato vero e proprio (<code>agenzia_matrimoniale.crt</code>).<br>
+Nel nostro caso non avendo a disposizione un ente certificatore la csr è stata auto verificata con <code>openssl</code> con una durata di 365 giorni.<br>
+<strong>NOTA</strong> : non  essendo noi un ente certificatore non possiamo dare nessuna garanzia sul certificato, che rimane comunque utilizzabile ma non &quot;sicuro&quot;
+<ul>
+<li><code>openssl x509 -req -days 365 -in agenzia_matrimoniale.csr -signkey agenzia_matrimoniale.key  -out agenzia_matrimoniale.crt</code></li>
+</ul>
+</li>
+</ol>
+<p>Questo è il risultato finale</p>
+<p><img src="http://localhost:8080/assets/cert.png" alt="cert"></p>
 
     </body>
     </html>
