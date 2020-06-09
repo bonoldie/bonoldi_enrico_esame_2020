@@ -24,6 +24,7 @@
     - [Ricerca](#ricerca)
     - [Profilo account](#profilo-account)
     - [Profilo utente](#profilo-utente)
+    - [Proxy immagini profilo](#proxy-immagini-profilo)
   - [6.a NoSql](#6a-nosql)
   - [6.b Sviluppo](#6b-sviluppo)
 - [SISTEMI E RETI](#sistemi-e-reti)
@@ -125,7 +126,7 @@ DUMP disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blo
 
 ## 4. Query significative
 
-#### [Ricerca dei partner](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/libs/user.js#L37)
+#### [Ricerca dei partner](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/libs/user.js#L37-L47)
 [app/libs/user.js](app/libs/user.js#L37)
 
 > $1 - id utente  
@@ -185,7 +186,7 @@ where
    OR info_utente.id = $1
 ```
 
-#### [Orientamento sessuale](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111)
+#### [Orientamento sessuale](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111-L120)
 
 
 [app/db/agenzia_matrimoniale.ddl.sql](app/db/agenzia_matrimoniale.ddl.sql#L111)
@@ -195,7 +196,7 @@ utilizzata nella costruzione della view ```info_utente```
 ```sql
 SELECT
    orientamento.utente_id,
-   array_to_string(array_agg(sesso.nome), ',' :: text) 
+   array_to_string(array_agg(sesso.nome), ',' :: text)  
    AS orientamento_aggregato
 FROM
    orientamento,
@@ -217,16 +218,16 @@ folders:
    - **public** : directory per servire file statici (js,css,assets,...)
    - **views** : templates e sections per *EJS*
 
-entry file **index.js** : 
+entry file [**index.js**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.json): 
   - setup di expressJS e registrazione routes.
 
-env file **env.json**
+env file [**env.json**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/env.json)  
 
 ### Login/Registrazione
 
-- Inizializzazione di una nuova sessiones
-- Controllo accesso via [middleware](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5) ([app/middlewares/auth.js](app/middlewares/auth.js#L5))
-- Validazione e registrazione
+- [Login](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L29-L58) e inizializzazione di una nuova sessione
+- Controllo accesso via [middleware](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5) ([app/middlewares/auth.js](app/middlewares/auth.js))
+- [Registrazione](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L64-L103)
 
 ![login page](http://localhost:8080/assets/login.png)
 ![register page](http://localhost:8080/assets/registrazione.png)
@@ -234,7 +235,7 @@ env file **env.json**
 ### Ricerca
 
 - [Ricerca dinamica](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/public/js/usersMap.js) dei possibili partner in un certo range (in km)
-- l'endpoint per la ricerca è ```/api/find/{range in metri}```
+- l'[endpoint per la ricerca](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L154-L161) è ```/api/find/{range in metri}```
   - ritornerà una lista di utenti compatibili
 
 ![find page](http://localhost:8080/assets/find.png)
@@ -243,7 +244,7 @@ env file **env.json**
 
 - Visionare i dati personali del proprio account
 - Modificare l'immagine profilo (cliccando sull'immagine corrente)
-  - l'endpoint per la modifica dell'immagine profilo è ```/users/img```
+  - [l'endpoint per la modifica dell'immagine profilo](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L133-L145) è ```/users/img```
 
 ![profile page](http://localhost:8080/assets/profile.png)
 
@@ -253,6 +254,9 @@ env file **env.json**
 
 ![user page](http://localhost:8080/assets/user.png)
 
+
+### Proxy immagini profilo
+Per ritornare una immagine profilo di default è stata implementata una [**route "proxy"**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L113-L130)
 
 ## 6.a NoSql 
 

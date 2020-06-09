@@ -63,6 +63,7 @@
 <li><a href="#ricerca">Ricerca</a></li>
 <li><a href="#profilo-account">Profilo account</a></li>
 <li><a href="#profilo-utente">Profilo utente</a></li>
+<li><a href="#proxy-immagini-profilo">Proxy immagini profilo</a></li>
 </ul>
 </li>
 <li><a href="#6a-nosql">6.a NoSql</a></li>
@@ -167,8 +168,10 @@ UTENTE(<ins>id</ins>,<em>sesso_id</em>,<em>residenza_id</em>,email,password,nome
 <h2 id="3-implementazione-database">3. Implementazione database</h2>
 <p>DDL disponibile <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql">qui</a><br>
 <a href="app/db/agenzia_matrimoniale.ddl.sql">app/db/agenzia_matrimoniale.ddl.sql</a></p>
+<p>DUMP disponibile <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.dump.sql">qui</a><br>
+<a href="app/db/agenzia_matrimoniale.dump.sql">app/db/agenzia_matrimoniale.dump.sql</a></p>
 <h2 id="4-query-significative">4. Query significative</h2>
-<h4 id="ricerca-dei-partner"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/libs/user.js#L37">Ricerca dei partner</a></h4>
+<h4 id="ricerca-dei-partner"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/libs/user.js#L37-L47">Ricerca dei partner</a></h4>
 <p><a href="app/libs/user.js#L37">app/libs/user.js</a></p>
 <blockquote>
 <p>$1 - id utente<br>
@@ -226,12 +229,12 @@ $2 - distanza dall'utente corrente (in metri)</p>
    )
    <span class="hljs-keyword">OR</span> info_utente.id = $<span class="hljs-number">1</span>
 </div></code></pre>
-<h4 id="orientamento-sessuale"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111">Orientamento sessuale</a></h4>
+<h4 id="orientamento-sessuale"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111-L120">Orientamento sessuale</a></h4>
 <p><a href="app/db/agenzia_matrimoniale.ddl.sql#L111">app/db/agenzia_matrimoniale.ddl.sql</a></p>
 <p>utilizzata nella costruzione della view <code>info_utente</code></p>
 <pre><code class="language-sql"><div><span class="hljs-keyword">SELECT</span>
    orientamento.utente_id,
-   array_to_string(array_agg(sesso.nome), <span class="hljs-string">','</span> :: <span class="hljs-built_in">text</span>) 
+   array_to_string(array_agg(sesso.nome), <span class="hljs-string">','</span> :: <span class="hljs-built_in">text</span>)  
    <span class="hljs-keyword">AS</span> orientamento_aggregato
 <span class="hljs-keyword">FROM</span>
    orientamento,
@@ -251,23 +254,23 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <li><strong>public</strong> : directory per servire file statici (js,css,assets,...)</li>
 <li><strong>views</strong> : templates e sections per <em>EJS</em></li>
 </ul>
-<p>entry file <strong>index.js</strong> :</p>
+<p>entry file <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.json"><strong>index.js</strong></a>:</p>
 <ul>
 <li>setup di expressJS e registrazione routes.</li>
 </ul>
-<p>env file <strong>env.json</strong></p>
+<p>env file <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/env.json"><strong>env.json</strong></a></p>
 <h3 id="loginregistrazione">Login/Registrazione</h3>
 <ul>
-<li>Inizializzazione di una nuova sessiones</li>
-<li>Controllo accesso via <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5">middleware</a> (<a href="app/middlewares/auth.js#L5">app/middlewares/auth.js</a>)</li>
-<li>Validazione e registrazione</li>
+<li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L29-L58">Login</a> e inizializzazione di una nuova sessione</li>
+<li>Controllo accesso via <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5">middleware</a> (<a href="app/middlewares/auth.js">app/middlewares/auth.js</a>)</li>
+<li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L64-L103">Registrazione</a></li>
 </ul>
 <p><img src="http://localhost:8080/assets/login.png" alt="login page">
 <img src="http://localhost:8080/assets/registrazione.png" alt="register page"></p>
 <h3 id="ricerca">Ricerca</h3>
 <ul>
 <li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/public/js/usersMap.js">Ricerca dinamica</a> dei possibili partner in un certo range (in km)</li>
-<li>l'endpoint per la ricerca è <code>/api/find/{range in metri}</code>
+<li>l'<a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L154-L161">endpoint per la ricerca</a> è <code>/api/find/{range in metri}</code>
 <ul>
 <li>ritornerà una lista di utenti compatibili</li>
 </ul>
@@ -279,7 +282,7 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <li>Visionare i dati personali del proprio account</li>
 <li>Modificare l'immagine profilo (cliccando sull'immagine corrente)
 <ul>
-<li>l'endpoint per la modifica dell'immagine profilo è <code>/users/img</code></li>
+<li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L133-L145">l'endpoint per la modifica dell'immagine profilo</a> è <code>/users/img</code></li>
 </ul>
 </li>
 </ul>
@@ -289,6 +292,8 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <li>Visionare i dati dell'account di un utente iscritto alla piattaforma</li>
 </ul>
 <p><img src="http://localhost:8080/assets/user.png" alt="user page"></p>
+<h3 id="proxy-immagini-profilo">Proxy immagini profilo</h3>
+<p>Per ritornare una immagine profilo di default è stata implementata una <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L113-L130"><strong>route &quot;proxy&quot;</strong></a></p>
 <h2 id="6a-nosql">6.a NoSql</h2>
 <p>Una alternativa efficace a <strong>postgres~postgis</strong> è <strong>mongodb~geoJSON</strong>.</p>
 <p><strong>GeoJSON</strong> (<a href="https://tools.ietf.org/html/rfc7946">RFC 7946</a>) è una specifica che introduce nel tipo di file <strong>JSON</strong> i riferimenti geospaziali (Point,LineString,...) e il sistema di coordinate.</p>
