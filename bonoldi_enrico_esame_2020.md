@@ -30,6 +30,7 @@
   - [Navigazione web](#navigazione-web)
     - [Soluzione HTTP Secure](#soluzione-http-secure)
     - [Funzionamento](#funzionamento)
+    - [Installazione](#installazione)
 
 --- 
 ## *Descrizione* <!-- omit in toc -->
@@ -85,7 +86,7 @@ La struttura del progetto è la seguente:
 2. l'orientamento sessuale di ogni utente può essere maschio e/o femmina.
 3. ricerca
    1.  basata sulla distanza tra i comuni di residenza degli utenti dal quello dell'utente che ricerca.
-   2.  basata sul orientamento sessuales
+   2.  basata sul orientamento sessuale
 
 ### Possibili sviluppi futuri
 
@@ -269,17 +270,33 @@ Per il mantenimento del codice è stato usato **GIT**
 
 ## Navigazione web
 
-Quando navigiamo nella rete percorriamo "strade" non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovra distribuire dati personali.
+Quando navigiamo nella rete percorriamo "strade" non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovrà distribuire dati personali.
 
 ### Soluzione HTTP Secure
 
 L'applicazione web usa **HTTP** e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente **nessun meccanismo di crittografia** e i dati viaggiano in chiaro tra client e server.  
 
-Per mettere in sicurezza **HTTP** si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
+Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
 
-### Funzionamento
-s
+### Funzionamento  
 La crittografia a **chiave asimmetrica** ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di **Enti certificatori** che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.  
+
+> Questo tipo di autenticazione può essere one-way nel caso sia solo il server ad autenticarsi, two-way (mutual) nel caso sia anche il client a doversi autenticare; nel secondo caso il procedimento rimane lo stesso sia per il client che per il server.
+
+1. **Client Hello**
+   In questa fase il client richiede al serve la connessione protetta tramite TLS e invia una serie di informazioni (epoch time,session ID, chipers, server name)
+2. **Server Hello**
+   Contiene la risposta al client con informazioni relative a:
+   1. Certificato
+   2. Algoritmi ci cifratura
+   3. Conferma di autenticazione (one-way o two-way)
+3. **Controllo certificato**
+   Il client (il browser) verifica l'autenticità del certificato 
+   affidandosi agli enti certificatori e controlla l'impronta e l'hostname.
+   Inoltre registra gli algoritmi accettati dal server.
+4. Da qui in poi la comunicazione passa a livello applicazione in cui tutto il traffico HTTP viene criptato/decriptato da TLS.
+
+### Installazione
 
 1. Generiamo una chiave asimmetrica (RSA)   
    - ``` openssl genrsa -des3 -passout pass:admin -out agenzia_matrimoniale.key 2048 ```    
@@ -290,6 +307,7 @@ Nel nostro caso non avendo a disposizione un ente certificatore la csr è stata 
 **NOTA** : non  essendo noi un ente certificatore non possiamo dare nessuna garanzia sul certificato, che rimane comunque utilizzabile ma non "sicuro"
    - ```openssl x509 -req -days 365 -in agenzia_matrimoniale.csr -signkey agenzia_matrimoniale.key  -out agenzia_matrimoniale.crt```
 
-Questo è il risultato finale
+Questo è il [risultato finale](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/tree/master/app/cert)
 
 ![cert](http://localhost:8080/assets/cert.png)
+

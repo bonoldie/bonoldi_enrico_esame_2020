@@ -75,6 +75,7 @@
 <ul>
 <li><a href="#soluzione-http-secure">Soluzione HTTP Secure</a></li>
 <li><a href="#funzionamento">Funzionamento</a></li>
+<li><a href="#installazione">Installazione</a></li>
 </ul>
 </li>
 </ul>
@@ -140,7 +141,7 @@ Offrono stumenti (validator,session manager,...) che permettono di gestire in si
 <li>ricerca
 <ol>
 <li>basata sulla distanza tra i comuni di residenza degli utenti dal quello dell'utente che ricerca.</li>
-<li>basata sul orientamento sessuales</li>
+<li>basata sul orientamento sessuale</li>
 </ol>
 </li>
 </ol>
@@ -299,13 +300,33 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <p>Esporre una possibile soluzione tecnologica, giustificandola, che consenta all’agenzia di offrire ai clienti la possibilità di accedere al servizio offerto in totale sicurezza e riservatezza. Illustrare in particolare gli aspetti di sicurezza delle comunicazioni a base web.</p>
 </blockquote>
 <h2 id="navigazione-web">Navigazione web</h2>
-<p>Quando navigiamo nella rete percorriamo &quot;strade&quot; non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovra distribuire dati personali.</p>
+<p>Quando navigiamo nella rete percorriamo &quot;strade&quot; non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovrà distribuire dati personali.</p>
 <h3 id="soluzione-http-secure">Soluzione HTTP Secure</h3>
 <p>L'applicazione web usa <strong>HTTP</strong> e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente <strong>nessun meccanismo di crittografia</strong> e i dati viaggiano in chiaro tra client e server.</p>
-<p>Per mettere in sicurezza <strong>HTTP</strong> si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.</p>
+<p>Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.</p>
 <h3 id="funzionamento">Funzionamento</h3>
-<p>s
-La crittografia a <strong>chiave asimmetrica</strong> ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di <strong>Enti certificatori</strong> che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.</p>
+<p>La crittografia a <strong>chiave asimmetrica</strong> ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di <strong>Enti certificatori</strong> che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.</p>
+<blockquote>
+<p>Questo tipo di autenticazione può essere one-way nel caso sia solo il server ad autenticarsi, two-way (mutual) nel caso sia anche il client a doversi autenticare; nel secondo caso il procedimento rimane lo stesso sia per il client che per il server.</p>
+</blockquote>
+<ol>
+<li><strong>Client Hello</strong>
+In questa fase il client richiede al serve la connessione protetta tramite TLS e invia una serie di informazioni (epoch time,session ID, chipers, server name)</li>
+<li><strong>Server Hello</strong>
+Contiene la risposta al client con informazioni relative a:
+<ol>
+<li>Certificato</li>
+<li>Algoritmi ci cifratura</li>
+<li>Conferma di autenticazione (one-way o two-way)</li>
+</ol>
+</li>
+<li><strong>Controllo certificato</strong>
+Il client (il browser) verifica l'autenticità del certificato
+affidandosi agli enti certificatori e controlla l'impronta e l'hostname.
+Inoltre registra gli algoritmi accettati dal server.</li>
+<li>Da qui in poi la comunicazione passa a livello applicazione in cui tutto il traffico HTTP viene criptato/decriptato da TLS.</li>
+</ol>
+<h3 id="installazione">Installazione</h3>
 <ol>
 <li>Generiamo una chiave asimmetrica (RSA)
 <ul>
@@ -325,7 +346,7 @@ Nel nostro caso non avendo a disposizione un ente certificatore la csr è stata 
 </ul>
 </li>
 </ol>
-<p>Questo è il risultato finale</p>
+<p>Questo è il <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/tree/master/app/cert">risultato finale</a></p>
 <p><img src="http://localhost:8080/assets/cert.png" alt="cert"></p>
 
     </body>
