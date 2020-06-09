@@ -165,8 +165,8 @@ UTENTE(<ins>id</ins>,<em>sesso_id</em>,<em>residenza_id</em>,email,password,nome
 <li>E' stata inserita una vista per facilitare l'accesso ai dati utente.</li>
 </ul>
 <h2 id="3-implementazione-database">3. Implementazione database</h2>
-<p>DDL disponibile <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_immobiliare.ddl.sql">qui</a><br>
-<a href="app/db/agenzia_immobiliare.ddl.sql">app/db/agenzia_immobiliare.ddl.sql</a></p>
+<p>DDL disponibile <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql">qui</a><br>
+<a href="app/db/agenzia_matrimoniale.ddl.sql">app/db/agenzia_matrimoniale.ddl.sql</a></p>
 <h2 id="4-query-significative">4. Query significative</h2>
 <h4 id="ricerca-dei-partner"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/libs/user.js#L37">Ricerca dei partner</a></h4>
 <p><a href="app/libs/user.js#L37">app/libs/user.js</a></p>
@@ -226,8 +226,8 @@ $2 - distanza dall'utente corrente (in metri)</p>
    )
    <span class="hljs-keyword">OR</span> info_utente.id = $<span class="hljs-number">1</span>
 </div></code></pre>
-<h4 id="orientamento-sessuale"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_immobiliare.ddl.sql#L111">Orientamento sessuale</a></h4>
-<p><a href="app/db/agenzia_immobiliare.ddl.sql#L111">app/db/agenzia_immobiliare.ddl.sql</a></p>
+<h4 id="orientamento-sessuale"><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111">Orientamento sessuale</a></h4>
+<p><a href="app/db/agenzia_matrimoniale.ddl.sql#L111">app/db/agenzia_matrimoniale.ddl.sql</a></p>
 <p>utilizzata nella costruzione della view <code>info_utente</code></p>
 <pre><code class="language-sql"><div><span class="hljs-keyword">SELECT</span>
    orientamento.utente_id,

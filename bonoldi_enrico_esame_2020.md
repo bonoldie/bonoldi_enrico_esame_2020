@@ -117,9 +117,11 @@ ORIENTAMENTO(*<ins>	utente_id </ins>*,	*<ins>sesso_id </ins>*)
 
 ## 3. Implementazione database
 
-DDL disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_immobiliare.ddl.sql)   
-[app/db/agenzia_immobiliare.ddl.sql](app/db/agenzia_immobiliare.ddl.sql)
+DDL disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql)   
+[app/db/agenzia_matrimoniale.ddl.sql](app/db/agenzia_matrimoniale.ddl.sql)
 
+DUMP disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.dump.sql)   
+[app/db/agenzia_matrimoniale.dump.sql](app/db/agenzia_matrimoniale.dump.sql)
 
 ## 4. Query significative
 
@@ -128,7 +130,6 @@ DDL disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob
 
 > $1 - id utente  
 > $2 - distanza dall'utente corrente (in metri) 
-
 
 ```sql
 SELECT
@@ -184,10 +185,10 @@ where
    OR info_utente.id = $1
 ```
 
-#### [Orientamento sessuale](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_immobiliare.ddl.sql#L111)
+#### [Orientamento sessuale](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L111)
 
 
-[app/db/agenzia_immobiliare.ddl.sql](app/db/agenzia_immobiliare.ddl.sql#L111)
+[app/db/agenzia_matrimoniale.ddl.sql](app/db/agenzia_matrimoniale.ddl.sql#L111)
 
 utilizzata nella costruzione della view ```info_utente```
 

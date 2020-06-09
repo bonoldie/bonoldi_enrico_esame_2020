@@ -14,10 +14,12 @@ Per ridurre il numero di dipendenze non sono implementati librerie (```cliProgre
 
 path: ```app```
 
-1. Creare il database *agenzia_matrimoniale* con template postgis;
-2. eseguire il comando :```node ./db/create_db.js agenzia_matrimoniale```
+1. Creare il database **agenzia_matrimoniale** con <ins>template postgis</ins>;
+2. eseguire il comando : ```node ./db/create_db.js agenzia_matrimoniale```
 
 La prodecura creerà le tabelle necessarie e lo popolerà con i dati contenuti in ```./db/{nome_risorsa}```
+
+Nel caso ci fossero problemi sono disponibili i file SQL per creare e inserire manualmente i dati nella directory  ```./db```
 
 ## APP SETUP
 

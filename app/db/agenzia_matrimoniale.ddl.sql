@@ -1,5 +1,5 @@
 -- Bonoldi Enrico
--- Agenzia immobiliare DDL
+-- Agenzia matrimoniale DDL
 -- v1.0
 -- 
 -- DROPS 
@@ -39,7 +39,7 @@ CREATE TABLE public.cap (
 
 CREATE TABLE public.utente (
    id serial NOT NULL,
-   email varchar(255) NOT NULL,
+   email varchar(255) NOT null unique,
    "password" varchar(255) NOT NULL,
    nome varchar(40) NOT NULL,
    cognome varchar(40) NOT NULL,

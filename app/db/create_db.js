@@ -27,7 +27,7 @@ if (!process.argv[2]) {
    }
 
    // Query DDL file 
-   const DDLFile = fs.readFileSync(__dirname+"/agenzia_immobiliare.ddl.sql").toString();
+   const DDLFile = fs.readFileSync(__dirname+"/agenzia_matrimoniale.ddl.sql").toString();
 
    await connectionPool.query(DDLFile)
       .then(res => console.log("-- DDL File executed \n"))
