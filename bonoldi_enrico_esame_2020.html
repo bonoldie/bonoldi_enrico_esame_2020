@@ -89,6 +89,9 @@
 ricerca della propria anima gemella in un dato territorio.</p>
 </blockquote>
 <h1 id="informatica">INFORMATICA</h1>
+<blockquote>
+<p><em>tutto il progretto è dispobnibile <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/tree/master/app">qui</a></em></p>
+</blockquote>
 <h2 id="1-analisi">1. Analisi</h2>
 <p>Soggetto : Agenzia Matrimoniale<br>
 Clienti : Chiunque (vedi supposizioni...)</p>
@@ -114,11 +117,15 @@ Offrono stumenti (validator,session manager,...) che permettono di gestire in si
 <h4 id="lato-client">lato client</h4>
 <ul>
 <li>HTML</li>
-<li>CSS (<a href="https://getbootstrap.com/">Bootstrap</a>)</li>
+<li>CSS
+<ul>
+<li><a href="https://getbootstrap.com/">Bootstrap</a></li>
+</ul>
+</li>
 <li>Javascript
 <ul>
 <li><a href="https://leafletjs.com/">Leaflet</a> (mappe)</li>
-<li><a href="https://jquery.com/">Jquery</a></li>
+<li><a href="https://jquery.com/">JQuery</a></li>
 </ul>
 </li>
 </ul>
@@ -137,12 +144,12 @@ Offrono stumenti (validator,session manager,...) che permettono di gestire in si
 <h5 id="in-grassetto-i-servizi-implementati-nella-soluzione-finale-">in grassetto i servizi implementati nella soluzione finale. <!-- omit in toc --></h5>
 <h3 id="supposizioni">Supposizioni</h3>
 <ol>
-<li>gli iscritti al sistema siano maggiorenni.</li>
+<li>gli iscritti al sistema siano <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L53-L58">maggiorenni</a>.</li>
 <li>l'orientamento sessuale di ogni utente può essere maschio e/o femmina.</li>
 <li>ricerca
 <ol>
 <li>basata sulla distanza tra i comuni di residenza degli utenti dal quello dell'utente che ricerca.</li>
-<li>basata sul orientamento sessuale</li>
+<li>basata sul orientamento sessuale (maschio e/o femmina)</li>
 </ol>
 </li>
 </ol>
@@ -251,10 +258,13 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <li><strong>libs</strong> : utilities per accesso al db (registrazione,login,...)</li>
 <li><strong>db</strong> : file per il setup e popolamento del db</li>
 <li><strong>middlewares</strong></li>
-<li><strong>public</strong> : directory per servire file statici (js,css,assets,...)</li>
-<li><strong>views</strong> : templates e sections per <em>EJS</em></li>
+<li><strong>public</strong> : directory per servire file statici (js,css,assets,...)
+<ul>
+<li><strong>views</strong> : <em>templates</em> e sections per <em>EJS</em></li>
 </ul>
-<p>entry file <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.json"><strong>index.js</strong></a>:</p>
+</li>
+</ul>
+<p>entry file <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js"><strong>index.js</strong></a>:</p>
 <ul>
 <li>setup di expressJS e registrazione routes.</li>
 </ul>
@@ -262,7 +272,7 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <h3 id="loginregistrazione">Login/Registrazione</h3>
 <ul>
 <li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L29-L58">Login</a> e inizializzazione di una nuova sessione</li>
-<li>Controllo accesso via <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5">middleware</a> (<a href="app/middlewares/auth.js">app/middlewares/auth.js</a>)</li>
+<li>Controllo accesso via <a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5-L11">middleware</a> (<a href="app/middlewares/auth.js">app/middlewares/auth.js</a>)</li>
 <li><a href="https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L64-L103">Registrazione</a></li>
 </ul>
 <p><img src="http://localhost:8080/assets/login.png" alt="login page">
@@ -308,7 +318,7 @@ $2 - distanza dall'utente corrente (in metri)</p>
 <p>Quando navigiamo nella rete percorriamo &quot;strade&quot; non protette e gestite da terzi; questo solleva un problema di sicurezza visto che la nostra applicazione dovrà distribuire dati personali.</p>
 <h3 id="soluzione-http-secure">Soluzione HTTP Secure</h3>
 <p>L'applicazione web usa <strong>HTTP</strong> e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente <strong>nessun meccanismo di crittografia</strong> e i dati viaggiano in chiaro tra client e server.</p>
-<p>Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.</p>
+<p>Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, <strong>TLS</strong> nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.</p>
 <h3 id="funzionamento">Funzionamento</h3>
 <p>La crittografia a <strong>chiave asimmetrica</strong> ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di <strong>Enti certificatori</strong> che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.</p>
 <blockquote>

@@ -40,6 +40,8 @@ ricerca della propria anima gemella in un dato territorio.
 
 # INFORMATICA
 
+> *il progretto è disponibile [qui](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/tree/master/app)*
+
 ## 1. Analisi
 
 Soggetto : Agenzia Matrimoniale  
@@ -65,10 +67,11 @@ Offrono stumenti (validator,session manager,...) che permettono di gestire in si
 
 #### lato client
 - HTML
-- CSS ([Bootstrap](https://getbootstrap.com/))
+- CSS 
+  - [Bootstrap](https://getbootstrap.com/)
 - Javascript
   - [Leaflet](https://leafletjs.com/) (mappe)
-  - [Jquery](https://jquery.com/)
+  - [JQuery](https://jquery.com/)
 
 ### Struttura
 
@@ -83,11 +86,11 @@ La struttura del progetto è la seguente:
 
 ### Supposizioni
 
-1. gli iscritti al sistema siano maggiorenni.
+1. gli iscritti al sistema siano [maggiorenni](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/db/agenzia_matrimoniale.ddl.sql#L53-L58).
 2. l'orientamento sessuale di ogni utente può essere maschio e/o femmina.
 3. ricerca
    1.  basata sulla distanza tra i comuni di residenza degli utenti dal quello dell'utente che ricerca.
-   2.  basata sul orientamento sessuale
+   2.  basata sul orientamento sessuale (maschio e/o femmina)
 
 ### Possibili sviluppi futuri
 
@@ -216,9 +219,9 @@ folders:
    - **db** : file per il setup e popolamento del db
    - **middlewares**
    - **public** : directory per servire file statici (js,css,assets,...)
-   - **views** : templates e sections per *EJS*
+     - **views** : *templates* e sections per *EJS*
 
-entry file [**index.js**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.json): 
+entry file [**index.js**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js): 
   - setup di expressJS e registrazione routes.
 
 env file [**env.json**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/env.json)  
@@ -226,7 +229,7 @@ env file [**env.json**](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/bl
 ### Login/Registrazione
 
 - [Login](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L29-L58) e inizializzazione di una nuova sessione
-- Controllo accesso via [middleware](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5) ([app/middlewares/auth.js](app/middlewares/auth.js))
+- Controllo accesso via [middleware](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/middlewares/auth.js#L5-L11) ([app/middlewares/auth.js](app/middlewares/auth.js))
 - [Registrazione](https://github.com/Bonoldiz/bonoldi_enrico_esame_2020/blob/master/app/index.js#L64-L103)
 
 ![login page](http://localhost:8080/assets/login.png)
@@ -281,7 +284,7 @@ Quando navigiamo nella rete percorriamo "strade" non protette e gestite da terzi
 
 L'applicazione web usa **HTTP** e questo non garantisce nessuna sicurezza per quanto riguarda la riservatezza; non è presente **nessun meccanismo di crittografia** e i dati viaggiano in chiaro tra client e server.  
 
-Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, TLS nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
+Per mettere in sicurezza HTTP si utilizza SSL(secure socket layer, **TLS** nella forma aggiornata) che si avvale di un meccanismo di certificati e crittografia asimmetrica per garantire la sicurezza.
 
 ### Funzionamento  
 La crittografia a **chiave asimmetrica** ci garantisce la riservatezza della comunicazione ma dal momento che questa modalità ha bisogno di distribuire la chiave pubblica sorge un problema di autenticità che è risolto mediante l'utilizzo di **Enti certificatori** che garantiscono l'autenticità della chiave pubblica utilizzata per la comunicazione.  
